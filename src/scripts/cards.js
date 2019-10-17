@@ -7,12 +7,21 @@ let cardCounter = 0
 
 // Factory Function that creates a new DOM component
 const cardFactory = (textString, number) => {
-    const newElement = `
-        <article class="border padding card--${number}">
-            <section class="padding">${textString}</section>
-            <button class="padding" type="button" id="delete">Delete</button>
-        </article>
-    `
+    const newElement = document.createElement("article")
+    newElement.className = `border padding card--${number}`
+
+    const newSection = document.createElement("section")
+    newSection.className = "padding"
+    newSection.textContent = `${textString}`
+
+    const newButton = document.createElement("button")
+    newButton.className = `padding delete--${number}`
+    newButton.type = "button"
+    newButton.id = "delete"
+    newButton.textContent = "Delete"
+    
+    newElement.appendChild(newSection)
+    newElement.appendChild(newButton)
     return newElement
 }
 
@@ -21,10 +30,11 @@ createButton.addEventListener("click", function (){
     if (textEl.value) {
         cardCounter += 1
         const addedEl = cardFactory(textEl.value, cardCounter)
-        elementContainer.innerHTML += addedEl
+        console.log(addedEl)
+        elementContainer.appendChild(addedEl)
         textEl.value = ""
     }
 })
 
 // When the user clicks the Delete button, the containing card, and no other cards, should then be removed from the DOM. Not just made invisible, actually removed from the DOM.
-// elementContainer.addEventListener()
+
