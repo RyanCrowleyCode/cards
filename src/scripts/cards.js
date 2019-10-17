@@ -14,14 +14,24 @@ const cardFactory = (textString, number) => {
     newSection.className = "padding"
     newSection.textContent = `${textString}`
 
-    const newButton = document.createElement("button")
-    newButton.className = `padding delete--${number}`
-    newButton.type = "button"
-    newButton.id = "delete"
-    newButton.textContent = "Delete"
+    const deleteButton = document.createElement("button")
+    deleteButton.className = `padding delete--${number}`
+    deleteButton.type = "button"
+    deleteButton.id = "delete"
+    deleteButton.textContent = "Delete"
     
     newElement.appendChild(newSection)
-    newElement.appendChild(newButton)
+    newElement.appendChild(deleteButton)
+
+    // put your delete button event listener in here and see what you can do!
+    deleteButton.addEventListener("click", function () {
+        // This finds the number listed on the delete button clicked
+        const currentCardNumber = event.target.classList[1].split("-")[2]
+        // Using the number from above, this finds the article that matches that number
+        const currentCard = document.querySelector(`.card--${currentCardNumber}`)
+        elementContainer.removeChild(currentCard)
+    })
+
     return newElement
 }
 
@@ -30,11 +40,12 @@ createButton.addEventListener("click", function (){
     if (textEl.value) {
         cardCounter += 1
         const addedEl = cardFactory(textEl.value, cardCounter)
-        console.log(addedEl)
+        // this console log finds the number of the card
+        // console.log(addedEl.classList[2].split("-")[2])
         elementContainer.appendChild(addedEl)
         textEl.value = ""
+
     }
 })
 
-// When the user clicks the Delete button, the containing card, and no other cards, should then be removed from the DOM. Not just made invisible, actually removed from the DOM.
 
